@@ -13,8 +13,9 @@ ulTodoList.style.paddingInlineStart = '0px';
 //create temporary array of todoList
 let arrTodoList = ["Buy Groceries", "Go for a Walk", "Relax"];
 
-//loop through arrTodoList to get items and create elements for the same
+//loop through arrTodoList to get items and create elements
 arrTodoList.forEach(todoElement => {
+
     //create list element
     let liTodo = document.createElement('li');
     liTodo.style.margin = '10px 0px';
