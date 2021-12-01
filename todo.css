@@ -1,0 +1,25 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+    color:white; 
+
+    
+}
+header {
+    min-height: 10vh;
+    border: 2px solid red;
+    text-align: center;
+
+}
+form{
+    min-height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border: 2px solid tomato;
+
+}
