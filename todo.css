@@ -1,25 +1,19 @@
 *{
-    margin:0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0 10px;
 }
-body {
-    background-color: black;
-    color:white; 
 
-    
+h2{
+    margin-bottom: 30px;
 }
-header {
-    min-height: 10vh;
-    border: 2px solid red;
-    text-align: center;
 
+.buttonComplete .buttonDelete{
+    width: 20px;
+    height: 20px;    
 }
-form{
-    min-height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    border: 2px solid tomato;
 
+.buttonEdit{
+    width: 30px;
+    height: 20px;
 }
+
+
