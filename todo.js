@@ -16,11 +16,13 @@
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
-divTodoList.style.border = 'solid 1px black';
-divTodoList.style.width = '50%';
+// divTodoList.style.border = 'solid 1px black';
+// divTodoList.style.width = '50%';
 
 //get ul 
 const ulTodoList = document.getElementById('ulTodoList');
+
+
 //remove bullets from ul
 ulTodoList.style.listStyle = 'none';
 ulTodoList.style.paddingInlineStart = '0px';
@@ -50,12 +52,20 @@ function AddItems(item) {
     //add radiobutton to li
     liTodo.appendChild(radioTodo);
 
-
-    //get the text from array
-    // let valTodo = document.createTextNode(todoElement);
+    //this will create node of type text
     let valTodo = document.createTextNode(item);
     //append text child to li
     liTodo.appendChild(valTodo);
+
+    //create textbox to edit the selected radio button
+    let txtItem = document.createElement('input');
+    txtItem.type = 'text';
+    txtItem.value = item; //setting the user entered value to textbox value
+    //hide the textbox while adding todo items
+    //we need this only for Edit
+    txtItem.hidden = true;
+    liTodo.appendChild(txtItem);
+
 
     //create complete button and append to li
     let btnComplete = document.createElement('input');
@@ -96,6 +106,13 @@ function AddItems(item) {
 
     //append li to ul
     ulTodoList.appendChild(liTodo);
+
+    //get the child element count and and add the border to the div when count is 1
+    if (ulTodoList.childElementCount == 1) {
+        divTodoList.style.border = 'solid 1px black';
+        divTodoList.style.width = '50%';
+    }
+
 }
 
 //get the Add button
