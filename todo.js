@@ -15,7 +15,6 @@
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
-console.log(divTodoList);
 divTodoList.style.border = 'solid 1px black';
 divTodoList.style.width = '50%';
 
