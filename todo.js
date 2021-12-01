@@ -16,7 +16,6 @@
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
-console.log(divTodoList);
 divTodoList.style.border = 'solid 1px black';
 divTodoList.style.width = '50%';
 
@@ -177,11 +176,6 @@ btnAdd.onclick = () => {
 
 // })
 
-// const selectedRadio = document.getElementsByName('radioTodo');
-// console.log(selectedRadio[0]);
-// // radioTodo.onchange = function (e) {
-// //     console.log(e.target);
-// // }
-// console.log(selectedRadio[1].checked)
+
 
 
