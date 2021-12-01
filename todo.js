@@ -1,3 +1,4 @@
+
 // import './styles.css';
 
 //include css dynamically
@@ -182,4 +183,5 @@ btnAdd.onclick = () => {
 // //     console.log(e.target);
 // // }
 // console.log(selectedRadio[1].checked)
+
 
