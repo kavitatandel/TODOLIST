@@ -176,10 +176,5 @@ btnAdd.onclick = () => {
 
 // })
 
-// const selectedRadio = document.getElementsByName('radioTodo');
-// console.log(selectedRadio[0]);
-// // radioTodo.onchange = function (e) {
-// //     console.log(e.target);
-// // }
-// console.log(selectedRadio[1].checked)
+
 
