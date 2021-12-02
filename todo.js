@@ -16,8 +16,12 @@
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
-// divTodoList.style.border = 'solid 1px black';
-// divTodoList.style.width = '50%';
+//initially divToDoList should be hidden
+divTodoList.hidden = true;
+
+//get the h2- todo list
+const h2Todo = document.getElementsByClassName('divTodoHeader')
+h2Todo[0].childNodes[1].hidden = true;
 
 //get ul 
 const ulTodoList = document.getElementById('ulTodoList');
@@ -111,15 +115,20 @@ function AddItems(item) {
     if (ulTodoList.childElementCount == 1) {
         divTodoList.style.border = 'solid 1px black';
         divTodoList.style.width = '50%';
+        divTodoList.hidden = false;
+        h2Todo[0].childNodes[1].hidden = false;
     }
 
+    //clear inputAdd, after user clicks on btnAdd
+    inputAdd.value = '';
+    inputAdd.focus();
 }
 
 //get the Add button
 const btnAdd = document.getElementById('btnAdd');
 
 btnAdd.onclick = () => {
-    AddItems(inputAdd.value)
+    AddItems(inputAdd.value);
 };
 
 
