@@ -122,7 +122,6 @@ function AddItems(item) {
     //clear inputAdd, after user clicks on btnAdd
     inputAdd.value = '';
     inputAdd.focus();
-
 }
 
 //get the Add button
