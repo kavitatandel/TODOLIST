@@ -1,3 +1,5 @@
+//make an array to store data on browser's local storage
+let arrTodoList = [];
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
@@ -14,7 +16,9 @@ const inputAdd = document.getElementById('inputAdd');
 //get the label for error messages
 const lblErrorMessage = document.getElementById('lblErrorMessage');
 
+//add todo items
 function AddItems(item) {
+
     //create div for each item
     let itemDivTodo = document.createElement('div');
     itemDivTodo.style.margin = '10px 0px';
@@ -36,6 +40,10 @@ function AddItems(item) {
     txtItem.type = 'text';
     txtItem.value = item; //setting the user entered value to textbox value    
     txtItem.disabled = true;
+    //set the background color and border to look textbox as label
+    //Note: when editing the items, need to change the style of textbox to lookalike textbox
+    txtItem.style.background = 'rgba(0,0,0,0)';
+    txtItem.style.border = '1px solid rgba(0,0,0,0)';
     itemDivTodo.appendChild(txtItem);
 
 
@@ -72,7 +80,7 @@ function AddItems(item) {
     btnDelete.disabled = true;
     itemDivTodo.appendChild(btnDelete);
 
-    //added on 03-dec
+    //append itemDivtodo to outer divTodoList
     divTodoList.appendChild(itemDivTodo);
 
     //check is there is items inside main div to do list
@@ -89,12 +97,29 @@ function AddItems(item) {
 
 }
 
+// check if local storage array is not null and  has items
+let arrayFromLocalStorage = JSON.parse(localStorage.getItem('itemsArray'));
+if (arrayFromLocalStorage != null && arrayFromLocalStorage.length > 0) {
+    //copy the local storage items to todo list array
+    arrTodoList = [...arrayFromLocalStorage];
+    //show the list from local storage    
+    for (let i = 0; i < arrTodoList.length; i++) {
+        if (arrTodoList[i] != null) {
+            AddItems(arrTodoList[i]);
+        }
+    }
+}
+
 //get the Add button
 const btnAdd = document.getElementById('btnAdd');
 
 //add items to div
 btnAdd.onclick = () => {
     if (inputAdd.value != '') {
+        //adding item to the array for local storage
+        arrTodoList.push(inputAdd.value)
+        //add todo list array to local storage
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
         AddItems(inputAdd.value);
     } else {
         lblErrorMessage.style.marginLeft = '20px';
