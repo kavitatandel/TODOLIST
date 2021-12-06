@@ -47,7 +47,7 @@ function AddItems(item) {
     itemDivTodo.appendChild(txtItem);
 
 
-    //create complete button and append to li
+    // //create complete button and append to Div
     let btnComplete = document.createElement('input');
     btnComplete.type = 'image';
     btnComplete.src = '/Images/complete.png';
@@ -56,9 +56,10 @@ function AddItems(item) {
     btnComplete.style.marginLeft = '20px';
     btnComplete.style.textAlign = 'right';
     btnComplete.disabled = true;
+    btnComplete.className = 'complete';
     itemDivTodo.appendChild(btnComplete);
 
-    //create edit button and append to li
+    //create edit button and append to Div
     let btnEdit = document.createElement('input');
     btnEdit.type = 'image';
     btnEdit.src = '/Images/edit.png';
@@ -67,9 +68,10 @@ function AddItems(item) {
     btnEdit.style.marginLeft = '20px';
     btnEdit.style.textAlign = 'right';
     btnEdit.disabled = true;
+    btnEdit.className = 'edit';
     itemDivTodo.appendChild(btnEdit);
 
-    //create delete button and append to li
+    //create delete button and append to Div
     let btnDelete = document.createElement('input');
     btnDelete.type = 'image';
     btnDelete.src = '/Images/delete.png';
@@ -78,6 +80,7 @@ function AddItems(item) {
     btnDelete.style.marginLeft = '20px';
     btnDelete.style.textAlign = 'right';
     btnDelete.disabled = true;
+    btnDelete.className = 'delete';
     itemDivTodo.appendChild(btnDelete);
 
     //append itemDivtodo to outer divTodoList
@@ -94,6 +97,7 @@ function AddItems(item) {
     //clear inputAdd, after user clicks on btnAdd
     inputAdd.value = '';
     inputAdd.focus();
+
 
 }
 
@@ -132,6 +136,68 @@ btnAdd.onclick = () => {
 //clear the error message when focus shifts to inputAdd
 inputAdd.onfocus = () => {
     lblErrorMessage.innerText = '';
+}
+
+const EnableButtons = (val) => {
+    console.log("Hello" + val);
+}
+
+//checkbox check events'
+const selectedRadio = document.getElementsByName('radioTodo');
+for (let i = 0; i < selectedRadio.length; i++) {
+    //get the radio button
+    const radButton = selectedRadio[i];
+    radButton.onchange = () => {
+        //get the parent node of the radio button
+        const parentNode = radButton.parentNode;
+
+        //call enable complete button function
+        enableComplete(parentNode)
+
+        //call enable edit button function
+        enableEdit(parentNode);
+
+        //call enable delete button function
+        enableDelete(parentNode);
+
+    };
+}
+
+//enable complete button function 
+const enableComplete = (parentNode) => {
+    //get the edit button
+    const btnComplete = parentNode.getElementsByClassName('complete');
+    for (let i = 0; i < btnComplete.length; i++) {
+        btnComplete[i].disabled = false;
+        btnComplete[i].onclick = (e) => {
+            console.log("Do some operations here....Complete button click");
+        }
+    }
+}
+
+//enale edit button function
+const enableEdit = (parentNode) => {
+    //get the edit button
+    const btnEdit = parentNode.getElementsByClassName('edit');
+    for (let i = 0; i < btnEdit.length; i++) {
+        btnEdit[i].disabled = false;
+        btnEdit[i].onclick = (e) => {
+            console.log("Do some edit here....edit button click");
+        }
+    }
+}
+
+//enable delete button function
+const enableDelete = (parentNode) => {
+    //get the delete button
+    const btnDelete = parentNode.getElementsByClassName('delete');
+    for (let i = 0; i < btnDelete.length; i++) {
+        btnDelete[i].disabled = false;
+        btnDelete[i].onclick = (e) => {
+            console.log("delete it....delete button click");
+        }
+    }
+
 }
 
 
