@@ -1,5 +1,7 @@
 //make an array to store data on browser's local storage
 let arrTodoList = [];
+//get the radio buttons
+const selectedRadio = document.getElementsByName('radioTodo');
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
@@ -133,71 +135,110 @@ btnAdd.onclick = () => {
 
 };
 
-//clear the error message when focus shifts to inputAdd
+//when focus goes on input text element
 inputAdd.onfocus = () => {
+    //clear the error message when focus shifts to inputAdd
     lblErrorMessage.innerText = '';
+
+    //unckeck the radio button and disable buttons (if any)
+    if (arrTodoList != null && arrTodoList.length > 0) {
+        const selectedRadio = document.getElementsByName('radioTodo');
+        for (let i = 0; i < selectedRadio.length; i++) {
+            if (selectedRadio[i].checked = true) {
+                selectedRadio[i].checked = false;
+                //get the parent node of the radio button
+                const parentNode = selectedRadio[i].parentNode;
+                //get the complete button
+                const buttonComplete = parentNode.querySelector('.complete');
+                //get the edit button
+                const buttonEdit = parentNode.querySelector('.edit');
+                //get the delete button
+                const buttonDelete = parentNode.querySelector('.delete');
+
+                buttonComplete.disabled = true;
+                buttonEdit.disabled = true;
+                buttonDelete.disabled = true;
+            }
+        }
+    }
 }
 
-const EnableButtons = (val) => {
-    console.log("Hello" + val);
+//enable complete button
+const enableComplete = (buttonComplete) => {
+    buttonComplete.disabled = false;
+    buttonComplete.onclick = (e) => {
+        console.log("Do some operations here....Complete button click");
+    }
 }
 
-//checkbox check events'
-const selectedRadio = document.getElementsByName('radioTodo');
+//enable edit button
+const enableEdit = (buttonEdit) => {
+    buttonEdit.disabled = false;
+    buttonEdit.onclick = (e) => {
+        console.log("Do some edit here....edit button click");
+    }
+
+}
+
+//enable delete button function
+const enableDelete = (buttonDelete) => {
+    buttonDelete.disabled = false;
+    buttonDelete.onclick = (e) => {
+        console.log("delete it....delete button click");
+    }
+}
+
+//disable all the buttons if radio button is unchecked
+const disableButtons = (buttons) => {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+    }
+}
+
+// //get the radio buttons
+// const selectedRadio = document.getElementsByName('radioTodo');
+//loop through all the radio buttons
 for (let i = 0; i < selectedRadio.length; i++) {
-    //get the radio button
-    const radButton = selectedRadio[i];
-    radButton.onchange = () => {
+
+    //check box change event
+    selectedRadio[i].onchange = () => {
+
+        //first disable all buttons (which were previously enabled)-for all list items
+        //this loop will run for all the todo list items
+        for (let i = 0; i < selectedRadio.length; i++) {
+            //get the parent node of the radio button
+            const pNode = selectedRadio[i].parentNode;
+            //get the edit button
+            const bComplete = pNode.getElementsByClassName('complete');
+            //get the edit button
+            const bEdit = pNode.getElementsByClassName('edit');
+            //get the delete button
+            const bDelete = pNode.getElementsByClassName('delete');
+
+            disableButtons(bComplete);
+            disableButtons(bEdit);
+            disableButtons(bDelete);
+        }
+
+        /////////////////////////This will run only when radio button is checked/////////////
         //get the parent node of the radio button
-        const parentNode = radButton.parentNode;
+        const parentNode = selectedRadio[i].parentNode;
+        //get the complete button
+        const buttonComplete = parentNode.querySelector('.complete');
+        //get the edit button
+        const buttonEdit = parentNode.querySelector('.edit');
+        //get the delete button
+        const buttonDelete = parentNode.querySelector('.delete');
 
         //call enable complete button function
-        enableComplete(parentNode)
-
+        enableComplete(buttonComplete)
         //call enable edit button function
-        enableEdit(parentNode);
-
+        enableEdit(buttonEdit);
         //call enable delete button function
-        enableDelete(parentNode);
+        enableDelete(buttonDelete);
 
     };
 }
 
-//enable complete button function 
-const enableComplete = (parentNode) => {
-    //get the edit button
-    const btnComplete = parentNode.getElementsByClassName('complete');
-    for (let i = 0; i < btnComplete.length; i++) {
-        btnComplete[i].disabled = false;
-        btnComplete[i].onclick = (e) => {
-            console.log("Do some operations here....Complete button click");
-        }
-    }
-}
-
-//enale edit button function
-const enableEdit = (parentNode) => {
-    //get the edit button
-    const btnEdit = parentNode.getElementsByClassName('edit');
-    for (let i = 0; i < btnEdit.length; i++) {
-        btnEdit[i].disabled = false;
-        btnEdit[i].onclick = (e) => {
-            console.log("Do some edit here....edit button click");
-        }
-    }
-}
-
-//enable delete button function
-const enableDelete = (parentNode) => {
-    //get the delete button
-    const btnDelete = parentNode.getElementsByClassName('delete');
-    for (let i = 0; i < btnDelete.length; i++) {
-        btnDelete[i].disabled = false;
-        btnDelete[i].onclick = (e) => {
-            console.log("delete it....delete button click");
-        }
-    }
-
-}
 
 
