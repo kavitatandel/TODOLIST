@@ -3,6 +3,9 @@ let arrTodoList = [];
 //get the radio buttons
 const selectedRadio = document.getElementsByName('radioTodo');
 
+//make an array to hold completed todolist
+let arrCompletedTodo = [];
+
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
 //initially divToDoList should be hidden
@@ -19,11 +22,12 @@ const inputAdd = document.getElementById('inputAdd');
 const lblErrorMessage = document.getElementById('lblErrorMessage');
 
 //add todo items
-function AddItems(item) {
+function AddItems(item, indefOfItem) {
 
     //create div for each item
     let itemDivTodo = document.createElement('div');
     itemDivTodo.style.margin = '10px 0px';
+    itemDivTodo.className = 'itemDivTodo';
 
     //create radiobutton
     let radioTodo = document.createElement('input');
@@ -48,6 +52,12 @@ function AddItems(item) {
     txtItem.style.border = '1px solid rgba(0,0,0,0)';
     itemDivTodo.appendChild(txtItem);
 
+    //added on 7-12-2021
+    //add the index of item
+    let lblIndex = document.createElement('label');
+    lblIndex.value = indefOfItem;
+    lblIndex.innerText = indefOfItem;
+    itemDivTodo.appendChild(lblIndex);
 
     // //create complete button and append to Div
     let btnComplete = document.createElement('input');
@@ -111,10 +121,29 @@ if (arrayFromLocalStorage != null && arrayFromLocalStorage.length > 0) {
     //show the list from local storage    
     for (let i = 0; i < arrTodoList.length; i++) {
         if (arrTodoList[i] != null) {
-            AddItems(arrTodoList[i]);
+            // AddItems(arrTodoList[i]);
+            AddItems(arrTodoList[i], i);
         }
     }
 }
+
+// check if local storage array is not null and  has items for completed list
+let completedLocalStorage = JSON.parse(localStorage.getItem('itemCompleted'));
+if (completedLocalStorage != null && completedLocalStorage.length > 0) {
+    //copy the local storage items to todo list array
+    arrCompletedTodo = [...completedLocalStorage];
+    //display completed list
+    const divCompletedTodo = document.getElementById('divCompletedTodo');
+    divCompletedTodo.style.border = 'solid 1px black';
+    divCompletedTodo.style.width = '50%';
+    for (let i = 0; i < arrCompletedTodo.length; i++) {
+        //create textNode
+        const pCompletedItem = document.createElement('p');
+        pCompletedItem.innerText = arrCompletedTodo[i];
+        divCompletedTodo.appendChild(pCompletedItem);
+    }
+}
+
 
 //get the Add button
 const btnAdd = document.getElementById('btnAdd');
@@ -124,15 +153,20 @@ btnAdd.onclick = () => {
     if (inputAdd.value != '') {
         //adding item to the array for local storage
         arrTodoList.push(inputAdd.value)
+
         //add todo list array to local storage
         localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
-        AddItems(inputAdd.value);
+
+        // AddItems(inputAdd.value);
+        AddItems(inputAdd.value, arrTodoList.length - 1);
+
+        //added to refresh the page
+        window.location.reload();
     } else {
         lblErrorMessage.style.marginLeft = '20px';
         lblErrorMessage.style.color = 'red';
         lblErrorMessage.innerText = 'Please enter items to add.';
     }
-
 };
 
 //when focus goes on input text element
@@ -168,6 +202,30 @@ const enableComplete = (buttonComplete) => {
     buttonComplete.disabled = false;
     buttonComplete.onclick = (e) => {
         console.log("Do some operations here....Complete button click");
+        //get the index of clicked item
+        const indexOfItemToRemove = e.currentTarget.parentNode.querySelector('label').innerText;
+
+        //add completed items to completed array list from arrTodoList
+        arrCompletedTodo.push(arrTodoList[indexOfItemToRemove]);
+
+        //remove item from arr Todo list
+        arrTodoList.splice(indexOfItemToRemove, 1);
+
+        //add todo list array and completed todo list to local storage
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+        localStorage.setItem('itemCompleted', JSON.stringify(arrCompletedTodo));
+
+        //refresh the page to load changes
+        window.location.reload();
+
+        //display completed list in div
+        const divCompletedTodo = document.getElementById('divCompletedTodo');
+
+        //create label element
+        const pCompletedItem = document.createElement('p');
+        pCompletedItem.innerText = arrCompletedTodo[arrCompletedTodo.length - 1];
+        divCompletedTodo.appendChild(pCompletedItem);
+
     }
 }
 
@@ -184,7 +242,13 @@ const enableEdit = (buttonEdit) => {
 const enableDelete = (buttonDelete) => {
     buttonDelete.disabled = false;
     buttonDelete.onclick = (e) => {
-        console.log("delete it....delete button click");
+        //get the index of clicked item
+        const indexOfItemToRemove = e.currentTarget.parentNode.querySelector('label').innerText;
+        arrTodoList.splice(indexOfItemToRemove, 1);
+        //add todo list array to local storage
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+        //refresh the page to load changes
+        window.location.reload();
     }
 }
 
