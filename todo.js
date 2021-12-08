@@ -107,6 +107,34 @@ btnAdd.onclick = () => {
 //clear the error message when focus shifts to inputAdd
 inputAdd.onfocus = () => {
     lblErrorMessage.innerText = '';
+
+}
+
+// My part
+
+radioTodo.onclick = () => {
+    // radioTodo.checked = true;
+    // btnComplete.disabled = false;
+    // btnEdit.disabled = false;
+    // btnDelete.disabled = false
+
+    btnEdit.onclick = () => {
+
+
+
+    }
+    btnDelete.onclick = () => {
+        itemDivTodo,innerHtml =''
+        // while (itemDivTodo.firstChild) {
+        //     itemDivTodo.removeChild(itemDivTodo.firstChild);
+        // }
+    
+    }
 }
 
 
+
+
+
+
+ 
