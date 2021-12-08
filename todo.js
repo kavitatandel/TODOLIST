@@ -1,3 +1,10 @@
+//make an array to store data on browser's local storage
+let arrTodoList = [];
+//get the radio buttons
+const selectedRadio = document.getElementsByName('radioTodo');
+
+//make an array to hold completed todolist
+let arrCompletedTodo = [];
 
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
@@ -14,10 +21,13 @@ const inputAdd = document.getElementById('inputAdd');
 //get the label for error messages
 const lblErrorMessage = document.getElementById('lblErrorMessage');
 
-function AddItems(item) {
+//add todo items
+function AddItems(item, indefOfItem) {
+
     //create div for each item
     let itemDivTodo = document.createElement('div');
     itemDivTodo.style.margin = '10px 0px';
+    itemDivTodo.className = 'itemDivTodo';
 
     //create radiobutton
     let radioTodo = document.createElement('input');
@@ -36,10 +46,20 @@ function AddItems(item) {
     txtItem.type = 'text';
     txtItem.value = item; //setting the user entered value to textbox value    
     txtItem.disabled = true;
+    //set the background color and border to look textbox as label
+    //Note: when editing the items, need to change the style of textbox to lookalike textbox
+    txtItem.style.background = 'rgba(0,0,0,0)';
+    txtItem.style.border = '1px solid rgba(0,0,0,0)';
     itemDivTodo.appendChild(txtItem);
 
+    //added on 7-12-2021
+    //add the index of item
+    let lblIndex = document.createElement('label');
+    lblIndex.value = indefOfItem;
+    lblIndex.innerText = indefOfItem;
+    itemDivTodo.appendChild(lblIndex);
 
-    //create complete button and append to li
+    // //create complete button and append to Div
     let btnComplete = document.createElement('input');
     btnComplete.type = 'image';
     btnComplete.src = '/Images/complete.png';
@@ -48,9 +68,10 @@ function AddItems(item) {
     btnComplete.style.marginLeft = '20px';
     btnComplete.style.textAlign = 'right';
     btnComplete.disabled = true;
+    btnComplete.className = 'complete';
     itemDivTodo.appendChild(btnComplete);
 
-    //create edit button and append to li
+    //create edit button and append to Div
     let btnEdit = document.createElement('input');
     btnEdit.type = 'image';
     btnEdit.src = '/Images/edit.png';
@@ -59,9 +80,10 @@ function AddItems(item) {
     btnEdit.style.marginLeft = '20px';
     btnEdit.style.textAlign = 'right';
     btnEdit.disabled = true;
+    btnEdit.className = 'edit';
     itemDivTodo.appendChild(btnEdit);
 
-    //create delete button and append to li
+    //create delete button and append to Div
     let btnDelete = document.createElement('input');
     btnDelete.type = 'image';
     btnDelete.src = '/Images/delete.png';
@@ -70,9 +92,10 @@ function AddItems(item) {
     btnDelete.style.marginLeft = '20px';
     btnDelete.style.textAlign = 'right';
     btnDelete.disabled = true;
+    btnDelete.className = 'delete';
     itemDivTodo.appendChild(btnDelete);
 
-    //added on 03-dec
+    //append itemDivtodo to outer divTodoList
     divTodoList.appendChild(itemDivTodo);
 
     //check is there is items inside main div to do list
@@ -87,7 +110,40 @@ function AddItems(item) {
     inputAdd.value = '';
     inputAdd.focus();
 
+
 }
+
+// check if local storage array is not null and  has items
+let arrayFromLocalStorage = JSON.parse(localStorage.getItem('itemsArray'));
+if (arrayFromLocalStorage != null && arrayFromLocalStorage.length > 0) {
+    //copy the local storage items to todo list array
+    arrTodoList = [...arrayFromLocalStorage];
+    //show the list from local storage    
+    for (let i = 0; i < arrTodoList.length; i++) {
+        if (arrTodoList[i] != null) {
+            // AddItems(arrTodoList[i]);
+            AddItems(arrTodoList[i], i);
+        }
+    }
+}
+
+// check if local storage array is not null and  has items for completed list
+let completedLocalStorage = JSON.parse(localStorage.getItem('itemCompleted'));
+if (completedLocalStorage != null && completedLocalStorage.length > 0) {
+    //copy the local storage items to todo list array
+    arrCompletedTodo = [...completedLocalStorage];
+    //display completed list
+    const divCompletedTodo = document.getElementById('divCompletedTodo');
+    divCompletedTodo.style.border = 'solid 1px black';
+    divCompletedTodo.style.width = '50%';
+    for (let i = 0; i < arrCompletedTodo.length; i++) {
+        //create textNode
+        const pCompletedItem = document.createElement('p');
+        pCompletedItem.innerText = arrCompletedTodo[i];
+        divCompletedTodo.appendChild(pCompletedItem);
+    }
+}
+
 
 //get the Add button
 const btnAdd = document.getElementById('btnAdd');
@@ -95,47 +151,160 @@ const btnAdd = document.getElementById('btnAdd');
 //add items to div
 btnAdd.onclick = () => {
     if (inputAdd.value != '') {
-        AddItems(inputAdd.value);
+        //adding item to the array for local storage
+        arrTodoList.push(inputAdd.value)
+
+        //add todo list array to local storage
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+
+        // AddItems(inputAdd.value);
+        AddItems(inputAdd.value, arrTodoList.length - 1);
+
+        //added to refresh the page
+        window.location.reload();
     } else {
         lblErrorMessage.style.marginLeft = '20px';
         lblErrorMessage.style.color = 'red';
         lblErrorMessage.innerText = 'Please enter items to add.';
     }
-
 };
 
-//clear the error message when focus shifts to inputAdd
+//when focus goes on input text element
 inputAdd.onfocus = () => {
+    //clear the error message when focus shifts to inputAdd
     lblErrorMessage.innerText = '';
 
-}
 
+    //unckeck the radio button and disable buttons (if any)
+    if (arrTodoList != null && arrTodoList.length > 0) {
+        const selectedRadio = document.getElementsByName('radioTodo');
+        for (let i = 0; i < selectedRadio.length; i++) {
+            if (selectedRadio[i].checked = true) {
+                selectedRadio[i].checked = false;
+                //get the parent node of the radio button
+                const parentNode = selectedRadio[i].parentNode;
+                //get the complete button
+                const buttonComplete = parentNode.querySelector('.complete');
+                //get the edit button
+                const buttonEdit = parentNode.querySelector('.edit');
+                //get the delete button
+                const buttonDelete = parentNode.querySelector('.delete');
 
-
-
-
-
-
-// My part
-
-radioTodo.onClick = () => {
-    // radioTodo.checked = true;
-    // btnComplete.disabled = false;
-    // btnEdit.disabled = false;
-    // btnDelete.disabled = false
-
-    btnEdit.onClick = () => {
-
-
-
-    }
-    btnDelete.onClick = () => {
-        itemDivTodo,innerHtml =''
-        // while (itemDivTodo.firstChild) {
-        //     itemDivTodo.removeChild(itemDivTodo.firstChild);
-        // }
-    
+                buttonComplete.disabled = true;
+                buttonEdit.disabled = true;
+                buttonDelete.disabled = true;
+            }
+        }
     }
 }
+
+//enable complete button
+const enableComplete = (buttonComplete) => {
+    buttonComplete.disabled = false;
+    buttonComplete.onclick = (e) => {
+        console.log("Do some operations here....Complete button click");
+        //get the index of clicked item
+        const indexOfItemToRemove = e.currentTarget.parentNode.querySelector('label').innerText;
+
+        //add completed items to completed array list from arrTodoList
+        arrCompletedTodo.push(arrTodoList[indexOfItemToRemove]);
+
+        //remove item from arr Todo list
+        arrTodoList.splice(indexOfItemToRemove, 1);
+
+        //add todo list array and completed todo list to local storage
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+        localStorage.setItem('itemCompleted', JSON.stringify(arrCompletedTodo));
+
+        //refresh the page to load changes
+        window.location.reload();
+
+        //display completed list in div
+        const divCompletedTodo = document.getElementById('divCompletedTodo');
+
+        //create label element
+        const pCompletedItem = document.createElement('p');
+        pCompletedItem.innerText = arrCompletedTodo[arrCompletedTodo.length - 1];
+        divCompletedTodo.appendChild(pCompletedItem);
+
+    }
+}
+
+//enable edit button
+const enableEdit = (buttonEdit) => {
+    buttonEdit.disabled = false;
+    buttonEdit.onclick = (e) => {
+        console.log("Do some edit here....edit button click");
+    }
+
+}
+
+//enable delete button function
+const enableDelete = (buttonDelete) => {
+    buttonDelete.disabled = false;
+    buttonDelete.onclick = (e) => {
+        //get the index of clicked item
+        const indexOfItemToRemove = e.currentTarget.parentNode.querySelector('label').innerText;
+        arrTodoList.splice(indexOfItemToRemove, 1);
+        //add todo list array to local storage
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+        //refresh the page to load changes
+        window.location.reload();
+
+    }
+}
+
+//disable all the buttons if radio button is unchecked
+const disableButtons = (buttons) => {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+    }
+}
+
+// //get the radio buttons
+// const selectedRadio = document.getElementsByName('radioTodo');
+//loop through all the radio buttons
+for (let i = 0; i < selectedRadio.length; i++) {
+
+    //check box change event
+    selectedRadio[i].onchange = () => {
+
+        //first disable all buttons (which were previously enabled)-for all list items
+        //this loop will run for all the todo list items
+        for (let i = 0; i < selectedRadio.length; i++) {
+            //get the parent node of the radio button
+            const pNode = selectedRadio[i].parentNode;
+            //get the edit button
+            const bComplete = pNode.getElementsByClassName('complete');
+            //get the edit button
+            const bEdit = pNode.getElementsByClassName('edit');
+            //get the delete button
+            const bDelete = pNode.getElementsByClassName('delete');
+
+            disableButtons(bComplete);
+            disableButtons(bEdit);
+            disableButtons(bDelete);
+        }
+
+        /////////////////////////This will run only when radio button is checked/////////////
+        //get the parent node of the radio button
+        const parentNode = selectedRadio[i].parentNode;
+        //get the complete button
+        const buttonComplete = parentNode.querySelector('.complete');
+        //get the edit button
+        const buttonEdit = parentNode.querySelector('.edit');
+        //get the delete button
+        const buttonDelete = parentNode.querySelector('.delete');
+
+        //call enable complete button function
+        enableComplete(buttonComplete)
+        //call enable edit button function
+        enableEdit(buttonEdit);
+        //call enable delete button function
+        enableDelete(buttonDelete);
+
+    };
+}
+
 
 
