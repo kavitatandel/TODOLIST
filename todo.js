@@ -110,20 +110,26 @@ inputAdd.onfocus = () => {
 
 }
 
+
+
+
+
+
+
 // My part
 
-radioTodo.onclick = () => {
+radioTodo.onClick = () => {
     // radioTodo.checked = true;
     // btnComplete.disabled = false;
     // btnEdit.disabled = false;
     // btnDelete.disabled = false
 
-    btnEdit.onclick = () => {
+    btnEdit.onClick = () => {
 
 
 
     }
-    btnDelete.onclick = () => {
+    btnDelete.onClick = () => {
         itemDivTodo,innerHtml =''
         // while (itemDivTodo.firstChild) {
         //     itemDivTodo.removeChild(itemDivTodo.firstChild);
@@ -133,8 +139,3 @@ radioTodo.onclick = () => {
 }
 
 
-
-
-
-
- 
