@@ -6,6 +6,12 @@ const selectedRadio = document.getElementsByName('radioTodo');
 //make an array to hold completed todolist
 let arrCompletedTodo = [];
 
+//get h1Completed
+const h1Completed = document.querySelector('.h1Completed');
+
+//find the clearAll button
+const btnclearAll = document.getElementById('clearAll');
+
 //get div with id divTodoList
 const divTodoList = document.getElementById('divTodoList');
 //initially divToDoList should be hidden
@@ -57,6 +63,7 @@ function AddItems(item, indefOfItem) {
     let lblIndex = document.createElement('label');
     lblIndex.value = indefOfItem;
     lblIndex.innerText = indefOfItem;
+    lblIndex.hidden = true;
     itemDivTodo.appendChild(lblIndex);
 
     // //create complete button and append to Div
@@ -136,12 +143,20 @@ if (completedLocalStorage != null && completedLocalStorage.length > 0) {
     const divCompletedTodo = document.getElementById('divCompletedTodo');
     divCompletedTodo.style.border = 'solid 1px black';
     divCompletedTodo.style.width = '50%';
+    //display h1Completed and clear all button
+    h1Completed.hidden = false;
+    btnclearAll.hidden = false;
     for (let i = 0; i < arrCompletedTodo.length; i++) {
         //create textNode
         const pCompletedItem = document.createElement('p');
         pCompletedItem.innerText = arrCompletedTodo[i];
         divCompletedTodo.appendChild(pCompletedItem);
     }
+}
+else {
+    //hide h1Completed  and clear all button  
+    h1Completed.hidden = true;
+    btnclearAll.hidden = true;
 }
 
 
@@ -202,7 +217,7 @@ inputAdd.onfocus = () => {
 const enableComplete = (buttonComplete) => {
     buttonComplete.disabled = false;
     buttonComplete.onclick = (e) => {
-        console.log("Do some operations here....Complete button click");
+
         //get the index of clicked item
         const indexOfItemToRemove = e.currentTarget.parentNode.querySelector('label').innerText;
 
@@ -224,8 +239,13 @@ const enableComplete = (buttonComplete) => {
 
         //create label element
         const pCompletedItem = document.createElement('p');
-        pCompletedItem.innerText = arrCompletedTodo[arrCompletedTodo.length - 1];
+        // pCompletedItem.innerText = arrCompletedTodo[arrCompletedTodo.length - 1];
+        pCompletedItem.innerText = arrCompletedTodo.pop();
         divCompletedTodo.appendChild(pCompletedItem);
+
+        //display h1Completed and clear all button
+        h1Completed.hidden = false;
+        btnclearAll.hidden = false;
 
     }
 }
@@ -304,6 +324,12 @@ for (let i = 0; i < selectedRadio.length; i++) {
         enableDelete(buttonDelete);
 
     };
+}
+
+//clearAll button click event
+btnclearAll.onclick = () => {
+    localStorage.removeItem('itemCompleted');
+    window.location.reload();
 }
 
 
