@@ -46,6 +46,7 @@ function AddItems(item, indefOfItem) {
     txtItem.type = 'text';
     txtItem.value = item; //setting the user entered value to textbox value    
     txtItem.disabled = true;
+    txtItem.className = 'txt-item'
     //set the background color and border to look textbox as label
     //Note: when editing the items, need to change the style of textbox to lookalike textbox
     txtItem.style.background = 'rgba(0,0,0,0)';
@@ -234,6 +235,15 @@ const enableComplete = (buttonComplete) => {
 const enableEdit = (buttonEdit) => {
     buttonEdit.disabled = false;
     buttonEdit.onclick = (e) => {
+        
+        const indexOfItemToRemove = e.currentTarget.parentNode.querySelector('label').innerText;
+        const textItem = document.querySelector('.txt-item')
+        document.querySelector('.itemDivTodo').textContent= e.target.value;
+        let todo = localStorage.getItem("todo");
+        arrTodoList = JSON.parse(todo);
+        textItem.value = arrTodoList[indexOfItemToRemove];
+        localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+        console.log('hello')
         console.log("Do some edit here....edit button click");
     }
 
