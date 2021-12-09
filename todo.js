@@ -52,6 +52,8 @@ function AddItems(item, indefOfItem) {
     txtItem.type = 'text';
     txtItem.value = item; //setting the user entered value to textbox value    
     txtItem.disabled = true;
+    //added for edit
+    txtItem.className = 'txt-item';
     //set the background color and border to look textbox as label
     //Note: when editing the items, need to change the style of textbox to lookalike textbox
     txtItem.style.background = 'rgba(0,0,0,0)';
@@ -254,9 +256,32 @@ const enableComplete = (buttonComplete) => {
 const enableEdit = (buttonEdit) => {
     buttonEdit.disabled = false;
     buttonEdit.onclick = (e) => {
-        console.log("Do some edit here....edit button click");
-    }
+        //get the index of clicked item
+        const indexOfItemToEdit = e.currentTarget.parentNode.querySelector('label').innerText;
+        const txtItem = e.currentTarget.parentNode.querySelector('.txt-item');
+        txtItem.disabled = false;
+        //set the background color and border to look textbox for edit    
+        txtItem.style.border = '1px solid black';
+        txtItem.style.background = 'white';
 
+        txtItem.onchange = (e) => {
+            console.log(e.target.value);
+            txtItem.innerText = e.target.value;
+            arrTodoList[indexOfItemToEdit] = txtItem.value;
+
+            //add todo list array to local storage
+            localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
+
+            //set the background color and border to look textbox as label
+            //Note: when editing the items, need to change the style of textbox to lookalike textbox
+            txtItem.disabled = true;
+            txtItem.style.background = 'rgba(0,0,0,0)';
+            txtItem.style.border = '1px solid rgba(0,0,0,0)';
+
+            //refresh the page to load changes
+            window.location.reload();
+        }
+    }
 }
 
 //enable delete button function
