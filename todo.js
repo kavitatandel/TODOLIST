@@ -191,6 +191,7 @@ inputAdd.onfocus = () => {
     //clear the error message when focus shifts to inputAdd
     lblErrorMessage.innerText = '';
 
+
     //unckeck the radio button and disable buttons (if any)
     if (arrTodoList != null && arrTodoList.length > 0) {
         const selectedRadio = document.getElementsByName('radioTodo');
@@ -293,6 +294,7 @@ const enableDelete = (buttonDelete) => {
         localStorage.setItem('itemsArray', JSON.stringify(arrTodoList));
         //refresh the page to load changes
         window.location.reload();
+
     }
 }
 
