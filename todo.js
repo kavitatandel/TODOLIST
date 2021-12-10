@@ -265,6 +265,7 @@ const enableEdit = (buttonEdit) => {
         txtItem.style.background = 'white';
 
         txtItem.onchange = (e) => {
+            console.log(e.target.value);
             txtItem.innerText = e.target.value;
             arrTodoList[indexOfItemToEdit] = txtItem.value;
 
