@@ -1,7 +1,12 @@
 * {
     -webkit-box-sizing: border-box;    
     -moz-box-sizing: border-box;   
-    box-sizing: border-box;    
+    box-sizing: border-box; 
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 28px;   
+    font-weight: 500;
+    color: #a89494;
+    
 }
 
 h2{
@@ -18,4 +23,30 @@ h2{
     height: 20px;
 }
 
+.column{
+    display: flex;
+    background-color: transparent;
+    margin: 100px 0px 20px;
+    padding: 20px 0px 20px;
+    font-family: "Lucida Console", Monaco, monospace;
+    letter-spacing: -0.2px;
+    word-spacing: 2px;
+    color: #a89494;
+    font-weight: 400;
+    font-size: 28px;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    
+}
 
+
+.background-img{
+    background-size: cover;
+    background-image: url(Images/bg.jpg);
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size: auto;
+}
