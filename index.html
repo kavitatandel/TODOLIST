@@ -5,39 +5,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="./todo.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <title>Todo Home</title>
 </head>
 
 <body>
-    <br>
-    <br>
-    <div>
-        <h1>Please add your todo.......</h1>
-    </div>
-        <input type="text" id="inputAdd">
-        <button type="button" id="btnAdd">Add</button>
-        <label id="lblErrorMessage"></label>
-    <div class="mainTodo">
-        <div class="divTodoHeader">
-            <h2>Todo List</h2>
-        </div>
-        <div id="divTodoList">
-        </div>
-    </div>
-    <br>
-    <br>
-    <div>
-        <h3 class="h1Completed">Completed Todo List</h3><button id="clearAll">Clear All Completed Todo</button><br>
-        <br>
-        <div id="divCompletedTodo"></div>
-        <br>
-    </div>
-    <script src="./todo.js"></script>
 
+    <div class="background-img">
+        <div
+            class="columns is-mobil is-flex-direction-column is-justify-content-space-between is-align-content-space-between is-align-items-center">
+            <div class="column">
+                <h1>Please add your todo.......</h1>
+                <input type="text" id="inputAdd">
+                <button type="button" id="btnAdd" class="button is-success">Add</button>
+            </div>
+            <div class="column is-two-thirds ">
+                <div class="mainTodo">
+                    <div class="divTodoHeader">
+                        <h2 class="has-text-success">Todo List</h2>
+                        <div id="divTodoList">
+                        </div>
+                    </div>
+                </div>
+                <div class="column ">
+                    <div>
+                        <h3 class="h1Completed has-text-success">Completed Todo List</h3>
+                        <button id="clearAll">Clear All Completed Todo</button>
+                        <div id="divCompletedTodo"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script src="./todo.js"></script>
 </body>
-
 
 </html>
