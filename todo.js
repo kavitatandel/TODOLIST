@@ -71,7 +71,7 @@ function AddItems(item, indefOfItem) {
     // //create complete button and append to Div
     let btnComplete = document.createElement('input');
     btnComplete.type = 'image';
-    btnComplete.src = '/Images/complete.png';
+    btnComplete.src = 'Images/complete.png';
     btnComplete.style.width = '20px';
     btnComplete.style.height = '20px';
     btnComplete.style.marginLeft = '20px';
@@ -83,7 +83,7 @@ function AddItems(item, indefOfItem) {
     //create edit button and append to Div
     let btnEdit = document.createElement('input');
     btnEdit.type = 'image';
-    btnEdit.src = '/Images/edit.png';
+    btnEdit.src = 'Images/edit.png';
     btnEdit.style.width = '30px';
     btnEdit.style.height = '20px';
     btnEdit.style.marginLeft = '20px';
@@ -95,7 +95,7 @@ function AddItems(item, indefOfItem) {
     //create delete button and append to Div
     let btnDelete = document.createElement('input');
     btnDelete.type = 'image';
-    btnDelete.src = '/Images/delete.png';
+    btnDelete.src = 'Images/delete.png';
     btnDelete.style.width = '20px';
     btnDelete.style.height = '20px';
     btnDelete.style.marginLeft = '20px';
