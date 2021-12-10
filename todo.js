@@ -109,7 +109,7 @@ function AddItems(item, indefOfItem) {
 
     //check is there is items inside main div to do list
     if (divTodoList.childElementCount === 1) {
-        divTodoList.style.border = 'solid 1px black';
+        // divTodoList.style.border = 'solid 1px black';
         divTodoList.style.width = '50%';
         divTodoList.hidden = false;
         h2Todo[0].childNodes[1].hidden = false;
@@ -143,7 +143,7 @@ if (completedLocalStorage != null && completedLocalStorage.length > 0) {
     arrCompletedTodo = [...completedLocalStorage];
     //display completed list
     const divCompletedTodo = document.getElementById('divCompletedTodo');
-    divCompletedTodo.style.border = 'solid 1px black';
+    //divCompletedTodo.style.border = 'solid 1px black';
     divCompletedTodo.style.width = '50%';
     //display h1Completed and clear all button
     h1Completed.hidden = false;
